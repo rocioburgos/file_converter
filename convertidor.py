@@ -4,8 +4,8 @@
 ## modo de uso : python convertidor.py path_archivo_csv/txt.csv
 ##               python csv_to_excel.py archivo.txt -o salida.xlsx
 #excel : 39sg
-# pandas: 1.53
-# spark
+# pandas: 28.95 seg
+# spark 46.35seg
 ##########################
 import pandas as pd
 import os
@@ -38,6 +38,7 @@ def convert_to_excel(input_file, excel_file=None):
         print(f"Error al procesar el archivo: {e}")
 
 def main():
+   
     """Función principal para ejecutar desde la consola."""
     parser = argparse.ArgumentParser(description="Convierte archivos CSV o TXT a Excel (.xlsx)")
     parser.add_argument("input_file", help="Ruta del archivo de entrada (.csv o .txt)")
@@ -47,4 +48,5 @@ def main():
     convert_to_excel(args.input_file, args.output)
 
 if __name__ == "__main__":
+    
     main()
