@@ -1,18 +1,24 @@
 ########################
 ## Convierte un archivo csv a xlsx
-## pip install pandas openpyxl    
+## pip install -r requirements.txt    
+## modo de uso : python convertidor.py path_archivo_csv/txt.csv
+##               python csv_to_excel.py archivo.txt -o salida.xlsx
+#excel : 39sg
+# pandas: 1.53
+# spark
 ##########################
 import pandas as pd
 import os
+import argparse 
 
-def csv_to_excel(input_file, excel_file=None):
+def convert_to_excel(input_file, excel_file=None):
     try:
           # Detectar la extensión del archivo
         file_extension = os.path.splitext(input_file)[1].lower()
 
         # Leer el archivo según su extensión
         if file_extension == ".csv":
-            df = pd.read_csv(input_file, delimiter=",")  # CSV con delimitador ","
+            df = pd.read_csv(input_file, delimiter="|")  # CSV con delimitador ","
         elif file_extension == ".txt":
             df = pd.read_csv(input_file, delimiter=",", engine="python")  # TXT con delimitador ","
         else:
@@ -31,7 +37,14 @@ def csv_to_excel(input_file, excel_file=None):
     except Exception as e:
         print(f"Error al procesar el archivo: {e}")
 
-# Ejemplo de uso
+def main():
+    """Función principal para ejecutar desde la consola."""
+    parser = argparse.ArgumentParser(description="Convierte archivos CSV o TXT a Excel (.xlsx)")
+    parser.add_argument("input_file", help="Ruta del archivo de entrada (.csv o .txt)")
+    parser.add_argument("-o", "--output", help="Ruta del archivo de salida (.xlsx)", default=None)
+
+    args = parser.parse_args()
+    convert_to_excel(args.input_file, args.output)
+
 if __name__ == "__main__":
-    csv_file = input("Ingrese la ruta del archivo (.csv o .txt): ")
-    csv_to_excel(csv_file)
+    main()
